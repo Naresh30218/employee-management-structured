@@ -105,4 +105,14 @@ public class EmployeeServiceImp implements EmployeeServiceIce{
 		employeeRepository.deleteById(employeeId);
 	}
 
+
+	@Override
+	public List getEmployeeBySalaryRange(double fromSalary, double toSalary) throws Exception {
+		List employeeList = employeeRepository.findEmployeeBySalaryRange(fromSalary, toSalary);
+		if (employeeList.isEmpty()) {
+			throw new Exception(new ResourceNotFoundException("this employee is not available"));
+		}
+		return employeeList;
+	}
+
 }

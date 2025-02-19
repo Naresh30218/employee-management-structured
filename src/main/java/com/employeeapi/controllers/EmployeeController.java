@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.employeeapi.entities.Employee;
@@ -24,6 +25,7 @@ public class EmployeeController {
 	@Autowired
 	private EmployeeServiceImp employeeServiceImp;
 
+//	----------------------add employee handler------------------------------------
 	@PostMapping()
 	public ResponseEntity<Employee> addEmployee(@RequestBody Employee employee) {
 		try {
@@ -36,6 +38,7 @@ public class EmployeeController {
 		}
 	}
 
+//	----------------------get employee by id handler------------------------------------
 	@GetMapping("/{id}")
 	public ResponseEntity<Employee> displayEmployeeById(@PathVariable("id") int id) {
 		try {
@@ -47,6 +50,7 @@ public class EmployeeController {
 		}
 	}
 
+//	----------------------get all employee handler------------------------------------
 	@GetMapping()
 	public ResponseEntity<List<Employee>> displayAllEmployees(){
 		try {
@@ -58,6 +62,7 @@ public class EmployeeController {
 		}
 	}
 
+//	----------------------update employee handler------------------------------------
 	@PutMapping("{id}")
 	public ResponseEntity<Employee> updateEmployee(@RequestBody Employee employee, @PathVariable("id")int id){
 		try {
@@ -69,13 +74,24 @@ public class EmployeeController {
 		}
 	}
 	
+//	----------------------delete employee handler------------------------------------
 	@DeleteMapping("{id}")
 	public ResponseEntity<Void> removeEmployee(@PathVariable("id")int id) throws Exception{
 		employeeServiceImp.deleteEmployee(id);
 		return ResponseEntity.status(HttpStatus.NO_CONTENT).build();
 	}
 	
-	
+//	----------------------get employee within salary range------------------------------------
+	@GetMapping("/bySalaryRange")
+	public ResponseEntity<List> displayEmployeeBySalaryRange(@RequestParam(defaultValue = "0") double fromSalary, @RequestParam(defaultValue = "0") double toSalary){
+		try {
+			List employeeList = employeeServiceImp.getEmployeeBySalaryRange(fromSalary, toSalary);
+			return ResponseEntity.status(HttpStatus.FOUND).body(employeeList);
+		} catch (Exception e) {
+			e.printStackTrace();
+			return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
+		}
+	}
 	
 	
 }

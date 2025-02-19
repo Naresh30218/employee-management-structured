@@ -11,4 +11,6 @@ public interface EmployeeServiceIce {
 	public Employee getEmployeeById(int employeeId) throws Exception;
 	public List<Employee> getAllEmployee();
 	public void deleteEmployee(int employeeId) throws Exception;
+	
+	public List getEmployeeBySalaryRange(double fromSalary, double toSalary) throws Exception;
 }
