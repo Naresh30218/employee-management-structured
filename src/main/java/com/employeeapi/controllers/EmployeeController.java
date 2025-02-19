@@ -16,6 +16,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.employeeapi.dto.DesignationCountDto;
+import com.employeeapi.dto.EmployeeSalaryDto;
 import com.employeeapi.entities.Employee;
 import com.employeeapi.services.EmployeeServiceImp;
 
@@ -30,7 +32,7 @@ public class EmployeeController {
 	public ResponseEntity<Employee> addEmployee(@RequestBody Employee employee) {
 		try {
 			Employee save = employeeServiceImp.saveEmployee(employee);
-			return ResponseEntity.status(HttpStatus.CREATED).body(save);
+			return ResponseEntity.status(HttpStatus.OK).body(save);
 
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -43,7 +45,7 @@ public class EmployeeController {
 	public ResponseEntity<Employee> displayEmployeeById(@PathVariable("id") int id) {
 		try {
 			Employee employee = employeeServiceImp.getEmployeeById(id);
-			return ResponseEntity.status(HttpStatus.FOUND).body(employee);
+			return ResponseEntity.status(HttpStatus.OK).body(employee);
 		} catch (Exception e) {
 			e.printStackTrace();
 			return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
@@ -55,7 +57,7 @@ public class EmployeeController {
 	public ResponseEntity<List<Employee>> displayAllEmployees(){
 		try {
 			List<Employee> employeeList = employeeServiceImp.getAllEmployee();
-			return ResponseEntity.status(HttpStatus.FOUND).body(employeeList);
+			return ResponseEntity.status(HttpStatus.OK).body(employeeList);
 		} catch (Exception e) {
 			e.printStackTrace();
 			return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
@@ -83,15 +85,37 @@ public class EmployeeController {
 	
 //	----------------------get employee within salary range------------------------------------
 	@GetMapping("/bySalaryRange")
-	public ResponseEntity<List> displayEmployeeBySalaryRange(@RequestParam(defaultValue = "0") double fromSalary, @RequestParam(defaultValue = "0") double toSalary){
+	public ResponseEntity<List<EmployeeSalaryDto>> displayEmployeeBySalaryRange(@RequestParam(defaultValue = "0") double fromSalary, @RequestParam(defaultValue = "0") double toSalary){
 		try {
-			List employeeList = employeeServiceImp.getEmployeeBySalaryRange(fromSalary, toSalary);
-			return ResponseEntity.status(HttpStatus.FOUND).body(employeeList);
+			List<EmployeeSalaryDto> employeeList = employeeServiceImp.getEmployeeBySalaryRange(fromSalary, toSalary);
+			return ResponseEntity.status(HttpStatus.OK).body(employeeList);
 		} catch (Exception e) {
 			e.printStackTrace();
 			return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
 		}
 	}
 	
+//	----------------------get order by salary------------------------------------
+	@GetMapping("/bySalaryOrder")
+	public ResponseEntity<List<EmployeeSalaryDto>> displayEmployeeOrderBySalary(){
+		try {
+			List<EmployeeSalaryDto> employeeList = employeeServiceImp.getEmployeeOrderBySalary();
+			return ResponseEntity.status(HttpStatus.OK).body(employeeList);
+		} catch (Exception e) {
+			e.printStackTrace();
+			return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
+		}
+	}
+//	----------------------get employee count by designation------------------------------------
+	@GetMapping("/countByDesignation")
+	public ResponseEntity<List<DesignationCountDto>> displayEmployeeCountByDesignation(){
+		try {
+			List<DesignationCountDto> designationCountList = employeeServiceImp.getEmployeeCountByDesignation();
+			return ResponseEntity.status(HttpStatus.OK).body(designationCountList);
+		} catch (Exception e) {
+			e.printStackTrace();
+			return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
+		}
+	}
 	
 }

@@ -8,6 +8,8 @@ import java.util.Optional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.employeeapi.dto.DesignationCountDto;
+import com.employeeapi.dto.EmployeeSalaryDto;
 import com.employeeapi.entities.Employee;
 import com.employeeapi.entities.EmployeeFamily;
 import com.employeeapi.exceptionHandler.ResourceNotFoundException;
@@ -106,13 +108,36 @@ public class EmployeeServiceImp implements EmployeeServiceIce{
 	}
 
 
+	//--------------------------get employee by Salary range-----------------------------
 	@Override
-	public List getEmployeeBySalaryRange(double fromSalary, double toSalary) throws Exception {
-		List employeeList = employeeRepository.findEmployeeBySalaryRange(fromSalary, toSalary);
+	public List<EmployeeSalaryDto> getEmployeeBySalaryRange(double fromSalary, double toSalary) throws Exception {
+		List<EmployeeSalaryDto> employeeList = employeeRepository.findEmployeeBySalaryRange(fromSalary, toSalary);
 		if (employeeList.isEmpty()) {
 			throw new Exception(new ResourceNotFoundException("this employee is not available"));
 		}
 		return employeeList;
+	}
+
+
+	//--------------------------get employee order by Salary-----------------------------
+	@Override
+	public List<EmployeeSalaryDto> getEmployeeOrderBySalary() throws Exception {
+		List<EmployeeSalaryDto> employeeList = employeeRepository.findEmployeeOrderBySalary();
+		if (employeeList.isEmpty()) {
+			throw new Exception(new ResourceNotFoundException("this employee is not available"));
+		}
+		return employeeList;
+	}
+
+
+	//--------------------------get employee Count by designation-----------------------------
+	@Override
+	public List<DesignationCountDto> getEmployeeCountByDesignation() throws Exception {
+		List<DesignationCountDto> designationCountList = employeeRepository.findDesigntionEmlpoyeeCount();
+		if (designationCountList.isEmpty()) {
+			throw new Exception(new ResourceNotFoundException("not resutl found"));
+		}
+		return designationCountList;
 	}
 
 }

@@ -4,7 +4,7 @@ public class ResourceNotFoundException extends Exception{
 	String errorMessage;
 	
 	public ResourceNotFoundException(String errorMessage) {
-		super(String.format("Found with %s: %s", errorMessage));
+		super(String.format("Found with : %s", errorMessage));
 		this.errorMessage = errorMessage;
 	}
 
