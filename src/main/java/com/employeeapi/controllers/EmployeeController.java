@@ -26,7 +26,7 @@ import com.employeeapi.services.EmployeeServiceImp;
 
 import lombok.extern.slf4j.Slf4j;
 
-@CrossOrigin(origins = {"http://localhost:4200", "https://emlpoyee-mgmt-fronend.web.app"})
+@CrossOrigin(origins = "*")
 @RestController
 @Slf4j
 @RequestMapping("/employees")
