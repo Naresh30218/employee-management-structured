@@ -27,7 +27,6 @@ public class SalaryController {
 	private SalaryServiceImpl salaryServiceImpl;
 	
 	
-	
 	@PostMapping
 	public ResponseEntity<EmployeeSalary> addSalary(@RequestBody EmployeeSalary employeeSalary){
 		try {
@@ -72,8 +71,6 @@ public class SalaryController {
 			return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
 		}
 	}
-	
-	
 	
 	
 }

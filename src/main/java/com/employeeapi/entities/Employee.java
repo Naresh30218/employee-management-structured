@@ -25,10 +25,10 @@ public class Employee {
 	private String employeeName;
 	
 	@Column(name = "employee_mobile")
-	private String emloyeeMobile;
+	private String employeeMobile;
 	
 	@Column(name = "employee_company")
-	private String emloyeeCompany;
+	private String employeeCompany;
 	
 	@Column(name = "employee_designation")
 	private String employeeDesignation;

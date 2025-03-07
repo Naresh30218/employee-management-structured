@@ -1,11 +1,14 @@
 package com.employeeapi.controllers;
 
+
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
 import org.springframework.http.HttpStatus;
-import org.springframework.http.HttpStatusCode;
+
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -21,7 +24,11 @@ import com.employeeapi.dto.EmployeeSalaryDto;
 import com.employeeapi.entities.Employee;
 import com.employeeapi.services.EmployeeServiceImp;
 
+import lombok.extern.slf4j.Slf4j;
+
+@CrossOrigin(origins = {"http://localhost:4200", "https://emlpoyee-mgmt-fronend.web.app"})
 @RestController
+@Slf4j
 @RequestMapping("/employees")
 public class EmployeeController {
 	@Autowired
@@ -54,18 +61,22 @@ public class EmployeeController {
 
 //	----------------------get all employee handler------------------------------------
 	@GetMapping()
-	public ResponseEntity<List<Employee>> displayAllEmployees(){
+	public ResponseEntity<Page<Employee>> displayAllEmployees(
+			@RequestParam(defaultValue = "0") int pageNumber,
+			@RequestParam(defaultValue = "5") int pageSize){
+		log.warn(pageNumber + ", " + pageSize);
 		try {
-			List<Employee> employeeList = employeeServiceImp.getAllEmployee();
+			Page<Employee> employeeList = employeeServiceImp.getAllEmployee(pageNumber, pageSize);
 			return ResponseEntity.status(HttpStatus.OK).body(employeeList);
 		} catch (Exception e) {
 			e.printStackTrace();
 			return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
 		}
 	}
+	
 
 //	----------------------update employee handler------------------------------------
-	@PutMapping("{id}")
+	@PutMapping("/{id}")
 	public ResponseEntity<Employee> updateEmployee(@RequestBody Employee employee, @PathVariable("id")int id){
 		try {
 			Employee employee2 = employeeServiceImp.updateEmployee(employee, id);

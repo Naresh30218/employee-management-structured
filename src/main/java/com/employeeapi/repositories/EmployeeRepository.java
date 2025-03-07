@@ -13,6 +13,8 @@ import com.employeeapi.entities.Employee;
 
 @Repository
 public interface EmployeeRepository extends JpaRepository<Employee, Integer>{
+	
+	
 	@Query("SELECT new com.employeeapi.dto.EmployeeSalaryDto(e.employeeId,e.employeeName,es.salary)"
 			+ "FROM EmployeeSalary es JOIN es.employee e "
 			+ "WHERE es.salary BETWEEN :fromSalary AND :toSalary")
