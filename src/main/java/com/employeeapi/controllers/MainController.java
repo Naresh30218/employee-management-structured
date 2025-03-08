@@ -7,10 +7,10 @@ import org.springframework.web.bind.annotation.RestController;
 public class MainController {
 
     // Welcome message for the root URL
-    @GetMapping("/")
-    public String home() {
-        return "Welcome to the Employee Management System!";
-    }
+    //@GetMapping("/")
+    //public String home() {
+    //    return "Welcome to the Employee Management System!";
+    //}
 
     // Optional: Redirect from root URL to /employees
     /*
